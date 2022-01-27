@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        .input-div {
+            width: 350px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        .input-div span {
+            display: inline-block;
+            width: 70px;
+        }
+
+        .input-div input {
+            width: 270px;
+            height: 30px;
+            font-size: 22px;
+        }
+
+        .button-div {
+            width: 200px;
+            margin: auto;
+        }
+
+        .button-div button {
+            width: 75px;
+            height: 35px;
+            margin: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <div style="height: 400px;width: 400px;border: solid 1px #000;margin: auto;margin-top: 100px;">
+        <div style="text-align: center; margin: 30px;font-size: 28px;font-weight: 800;">登录</div>
+        <div class="input-div"><span>用户名：</span><input type="text" id="username"></div>
+        <div class="input-div"><span>密码：</span><input type="password" id="password"></div>
+        <div id="mes" style="color: #f00;"></div>
+        <div class="button-div">
+            <button onclick="login()">登录</button>
+            <button onclick="window.location.href = 'register.html'">注册</button>
+        </div>
+    </div>
+    <script>
+        function login() {
+            const username = $('#username').val()
+            const password = $('#password').val()
+            $.post('/api/login', { username: username, password: password }, (res) => {
+                console.log(res)
+                if (!res.succeed) $('#mes').text('登录失败, '+ res.message)
+                else $('#mes').text('登录成功')
+            })
+        }
+    </script>
+</body>
+
+</html>

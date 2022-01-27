@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        .input-div {
+            width: 350px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+
+        .input-div span {
+            display: inline-block;
+            width: 80px;
+        }
+
+        .input-div input {
+            width: 260px;
+            height: 30px;
+            font-size: 22px;
+        }
+
+        .button-div {
+            width: 140px;
+            margin: auto;
+        }
+
+        .button-div button {
+            width: 120px;
+            height: 35px;
+            margin: 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+</head>
+
+<body>
+    <div style="height: 400px;width: 400px;border: solid 1px #000;margin: auto;margin-top: 100px;">
+        <div style="text-align: center; margin: 30px;font-size: 28px;font-weight: 800;">注册</div>
+        <div class="input-div"><span>用户名：</span><input type="text" id="username"></div>
+        <div class="input-div"><span>密码：</span><input type="password" id="pwd1"></div>
+        <div class="input-div"><span>重复密码：</span><input type="password" id="pwd2"></div>
+        <div id="mes" style="color: #f00;"></div>
+
+        <div class="button-div">
+            <button onclick="reg()">注册并登录</button>
+        </div>
+    </div>
+    <script>
+        function reg() {
+            const username = $('#username').val()
+            const password = $('#pwd1').val()
+            const password2 = $('#pwd2').val()
+            if(password!==password2){
+                $('#mes').text('两次输入的密码不一致')
+                return
+            }
+            $.post('/api/register', { username: username, password: password }, (res) => {
+                console.log(res)
+                if (!res.succeed) $('#mes').text('注册失败, '+ res.message)
+                else $('#mes').text('注册成功')
+            })
+        }
+    </script>
+</body>
+
+</html>
